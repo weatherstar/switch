@@ -1,4 +1,4 @@
 language: node_js
 node_js:
-    - "5.0"
-script: bash ./build/ci.sh
+  - "5"
+script: bash build/ci.sh

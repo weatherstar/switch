@@ -14,8 +14,8 @@
     "switch",
     "checkbox"
   ],
-  "script": {
-    "test": "npm unit",
+  "scripts": {
+    "test": "npm run unit",
     "unit": "karma start build/karma.unit.config.js"
   },
   "author": "zhiyul",

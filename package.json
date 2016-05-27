@@ -4,7 +4,8 @@
   "description": "A simple and powerful switch for checkbox.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run unit",
+    "unit": "karma start build/karma.unit.config.js"
   },
   "repository": {
     "type": "git",
@@ -14,10 +15,6 @@
     "switch",
     "checkbox"
   ],
-  "scripts": {
-    "test": "npm run unit",
-    "unit": "karma start build/karma.unit.config.js"
-  },
   "author": "zhiyul",
   "license": "MIT",
   "bugs": {
@@ -39,6 +36,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.7.0",
     "object-assign": "^4.1.0",
+    "phantomjs": "^2.1.7",
     "webpack": "^1.13.1"
   }
 }

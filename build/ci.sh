@@ -1,0 +1,3 @@
+set -e
+
+npm test

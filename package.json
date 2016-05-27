@@ -1,0 +1,44 @@
+{
+  "name": "switch",
+  "version": "1.0.0",
+  "description": "A simple and powerful switch for checkbox.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhiyul/Switch.git"
+  },
+  "keywords": [
+    "switch",
+    "checkbox"
+  ],
+  "script": {
+    "test": "npm unit",
+    "unit": "karma start build/karma.unit.config.js"
+  },
+  "author": "zhiyul",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhiyul/Switch/issues"
+  },
+  "homepage": "https://github.com/zhiyul/Switch#readme",
+  "devDependencies": {
+    "babel-core": "^6.9.0",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-runtime": "^6.9.0",
+    "babel-polyfill": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-runtime": "^6.9.0",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^1.7.0",
+    "object-assign": "^4.1.0",
+    "webpack": "^1.13.1"
+  }
+}

@@ -3,9 +3,6 @@ node_js:
   - "5"
 script:
   - npm run test
-after_script:
   - npm run ci
 after_success:
-  - codecov
-  - 'cat coverage/lcov.info | ./node_modules/.bin/coveralls'
-  - 'cat coverage/lcov.info | ./node_modules/.bin/codeclimate'
+  - 'cat ./coverage/lcov.info | ./node_modules/.bin/coveralls'

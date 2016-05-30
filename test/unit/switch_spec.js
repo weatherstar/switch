@@ -4,7 +4,4 @@ describe('Test init.', function () {
         var mySwitch = new Switch();
         expect(mySwitch instanceof Switch).toBe(true);
     });
-    it('test',function () {
-        expect(true).toBe(true);
-    })
 });

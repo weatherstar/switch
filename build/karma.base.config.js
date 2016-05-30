@@ -12,7 +12,10 @@ var webpackConfig = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
-          plugins: ['transform-runtime'],
+          plugins: [
+            'transform-runtime',
+            ['coverage', {ignore: ['test/']}]
+          ],
           presets: ['es2015', 'stage-0']
         }
       }
@@ -39,6 +42,5 @@ module.exports = {
   webpack: webpackConfig,
   webpackMiddleware: {
     noInfo: true
-  },
-  singleRun: true
+  }
 }

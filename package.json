@@ -4,8 +4,10 @@
   "description": "A simple and powerful switch for checkbox.",
   "main": "index.js",
   "scripts": {
-    "test": "npm run unit",
-    "unit": "karma start build/karma.unit.config.js"
+    "test": "npm run test:unit",
+    "ci": "npm run test:cover",
+    "test:unit": "karma start build/karma.unit.config.js",
+    "test:cover": "karma start build/karma.cover.config.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,7 @@
   "devDependencies": {
     "babel-core": "^6.9.0",
     "babel-loader": "^6.2.4",
+    "babel-plugin-coverage": "^1.0.0",
     "babel-plugin-transform-runtime": "^6.9.0",
     "babel-polyfill": "^6.9.0",
     "babel-preset-es2015": "^6.9.0",
@@ -32,6 +35,7 @@
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "^1.0.0",
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-sourcemap-loader": "^0.3.7",

@@ -4,9 +4,6 @@ var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var cssExtractor = ExtractTextPlugin.extract("css?sourceMap!postcss");
-var lessExtractor = ExtractTextPlugin.extract("css?sourceMap!postcss!less?sourceMap");
-
 var DIST_DIR = path.resolve(__dirname, '../dist');
 var SRC_DIR = path.resolve(__dirname, '../src');
 
@@ -27,10 +24,13 @@ module.exports = {
     loaders: [
       {
         test: /\.css$/,
-        loader: cssExtractor
-      }, {
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+      },
+      // Optionally extract less files
+      // or any other compile-to-css language
+      {
         test: /\.less$/,
-        loader: lessExtractor
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
       },
       {
         test: /\.js$/,
@@ -47,7 +47,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin("css/[name].css"),
+    new ExtractTextPlugin("switch.css"),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"development"'

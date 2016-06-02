@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/switch.css">
 </head>
 <body>
+<input id="light" type="checkbox" />
 <script src="/switch.js"></script>
 <script>
     (function () {
-        var mySwitch = new Switch();
+        var mySwitch = new Switch(document.querySelector('#light'),{});
     })();
 </script>
 </body>

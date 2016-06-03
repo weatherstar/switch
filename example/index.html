@@ -11,7 +11,11 @@
 <script>
 
     (function () {
-        var mySwitch = new Switch(document.querySelector('#light'),{});
+        var mySwitch = new Switch(document.querySelector('#light'),{
+            showText: true,
+            onText: 'LRC',
+            offText: 'LRC'
+        });
     })();
 
 </script>

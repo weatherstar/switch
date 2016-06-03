@@ -1,18 +1,44 @@
+@primary-color: #F15648;
+
 .switch{
   display: inline-block;
   vertical-align: middle;
   position: relative;
-  background: #F15648;
-  border: 1px solid #ddd;
-  padding: 2px;
+  cursor: pointer;
+  transition: all 0.4s;
   small{
-    display: block;
+    position: relative;
+    top: 0;
     width: 50%;
     height: 100%;
+    line-height: 100%;
+    text-align: center;
+    display: block;
     background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    transition: all 0.4s;
+    overflow: hidden;
   }
 }
 .switch-default{
-  width: 32px;
+  width: 38px;
   height: 12px;
+  font-size: 12px;
+}
+.switch-small{
+
+}
+.switch-large{
+
+}
+.switch-off{
+  small{
+    left: 0;
+  }
+}
+.switch-on{
+  transition: border 0.4s, box-shadow 0.4s, background-color 1.2s;
+  small{
+    left: 50%;
+  }
 }

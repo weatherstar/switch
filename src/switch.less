@@ -5,40 +5,52 @@
   vertical-align: middle;
   position: relative;
   cursor: pointer;
-  transition: all 0.4s;
+  transition: border 0.4s, box-shadow 0.4s, background-color 1.2s;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   small{
+    font-size: 12px;
     position: relative;
     top: 0;
-    width: 50%;
-    height: 100%;
-    line-height: 100%;
+    border-radius: 100%;
     text-align: center;
     display: block;
     background: #fff;
     box-shadow: 0 1px 3px rgba(0,0,0,0.4);
     transition: all 0.4s;
     overflow: hidden;
+    color: #000;
   }
 }
 .switch-default{
-  width: 38px;
-  height: 12px;
-  font-size: 12px;
+  width: 50px;
+  height: 30px;
+  border-radius: 20px;
+  line-height: 30px;
+  small{
+    width: 30px;
+    height: 30px;
+  }
 }
 .switch-small{
-
+  border-radius: 20px;
+  height: 20px;
+  width: 33px;
+  line-height: 20px;
+  small{
+    height: 20px;
+    width: 20px;
+  }
 }
 .switch-large{
-
-}
-.switch-off{
+  border-radius: 40px;
+  height: 40px;
+  width: 66px;
+  line-height: 40px;
   small{
-    left: 0;
+    height: 40px;
+    width: 40px;
   }
 }
-.switch-on{
-  transition: border 0.4s, box-shadow 0.4s, background-color 1.2s;
-  small{
-    left: 50%;
-  }
+.switch-disabled{
+  opacity: 0.5;
 }

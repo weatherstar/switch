@@ -1,9 +1,10 @@
 {
-  "name": "switch",
+  "name": "weatherstar-switch",
   "version": "1.0.0",
   "description": "A simple and powerful switch for checkbox.",
-  "main": "index.js",
+  "main": "dist/switch.js",
   "scripts": {
+    "build": "webpack --config build/build.js",
     "dev": "webpack-dev-server --inline --config build/webpack.dist.dev.config.js",
     "test": "npm run test:unit",
     "ci": "npm run test:cover",

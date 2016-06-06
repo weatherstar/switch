@@ -14,12 +14,17 @@ function Switch (el, options) {
 
 Switch.options = {
     size: 'default',
-    onText: 'on',
-    offText: 'off',
+    onText: 'Y',
+    offText: 'N',
     onSwitchColor: '#F15648',
     offSwitchColor: '#fff',
     onJackColor: '#fff',
-    offJackColor: '#fff'
+    offJackColor: '#fff',
+    showText: false,
+    disabled: false,
+    onChange: noop,
+    onRemove: noop,
+    onDestroy: noop
 };
 
 /**
@@ -47,8 +52,8 @@ Switch.prototype._init = function (el, options) {
  * @private
  */
 Switch.prototype._initElement = function () {
-
     this._el.style.display = 'none';
+
     if(this._options.checked !== undefined){
         this._el.checked = Boolean(this._options.checked);
     }else {
@@ -56,9 +61,8 @@ Switch.prototype._initElement = function () {
     }
 
     let newSwitch = this._createSwitch();
-    initSwitchStyle(newSwitch, this._options, this);
-    setJackText.call(this);
     insertSwitch(newSwitch, this._el);
+    initSwitchStyle(newSwitch, this._options, this);
     
 };
 /**
@@ -78,8 +82,10 @@ function initSwitchStyle(swEl, options, sw) {
         'switch-' + (legalSize.includes(options.size) ? options.size : 'default'),
         options.checked ? SWITCH_ON_CLASS : SWITCH_OFF_CLASS
     );
+    setJackText.call(sw);
     setSwitchColor.call(sw);
-
+    setJackPosition.call(sw);
+    setSwitchDisabled.call(sw, sw._options.disabled);
 }
 
 function insertSwitch(source, target) {
@@ -88,10 +94,20 @@ function insertSwitch(source, target) {
 
 function setSwitchColor() {
     this._switch.style.boxShadow = this._el.checked ?
-        ('inset 0 0 0 16px  ' + this._options.onSwitchColor) :
+        ('inset 0 0 0 20px  ' + this._options.onSwitchColor) :
         ('inset 0 0 0 0  ' + this._options.offSwitchColor);
     this._switch.style.border = '1px solid ' + (this._el.checked ? this._options.onSwitchColor : SWITCH_BORDER_COLOR)
     this._jack.style.backgroundColor = (this._el.checked ? this._options.onJackColor : this._options.offJackColor);
+}
+
+function setSwitchDisabled(disabled) {
+    this._el.disabled = disabled;
+    classList(this._switch)[disabled? 'add' : 'remove']('switch-disabled');
+}
+
+function setJackPosition() {
+    let offset = this._switch.clientWidth - this._jack.clientWidth;
+    this._jack.style.left = this._el.checked ? offset+'px' : 0;
 }
 
 function setJackText() {
@@ -112,6 +128,7 @@ let switchEventsHandles = {
         this._toggle(this._el.checked);
     },
     changeSwitchStateFromSwitch(){
+        if(this._options.disabled)return;
         this._toggle();
     }
 };
@@ -135,11 +152,13 @@ function bindEvents(events, sw) {
  */
 Switch.prototype._toggle = function (checked) {
     this._el.checked = checked === undefined ? !this._el.checked : checked;
+    this._options.onChange.call(this, this._el.checked);
     let addClass = this._el.checked ? SWITCH_ON_CLASS : SWITCH_OFF_CLASS;
     let removeClass = this._el.checked ? SWITCH_OFF_CLASS : SWITCH_ON_CLASS;
     classList(this._switch)
         .add(addClass)
         .remove(removeClass);
+    setJackPosition.call(this);
     setJackText.call(this);
     setSwitchColor.call(this);
 };
@@ -148,14 +167,14 @@ Switch.prototype._toggle = function (checked) {
  * @public
  */
 Switch.prototype.on = function () {
-    this._on(SWITCH_ON_CLASS, SWITCH_OFF_CLASS, true);
+    this._toggle(true);
 };
 
 /**
  * @public
  */
 Switch.prototype.off = function () {
-    this._off(SWITCH_OFF_CLASS, SWITCH_ON_CLASS, false);
+    this._toggle(false);
 };
 
 /**
@@ -165,9 +184,22 @@ Switch.prototype.toggle = function () {
     this._toggle();
 };
 
-Switch.prototype.remove = function () {
-
+Switch.prototype.disabled = function () {
+    setSwitchDisabled.call(this, this._options.disabled = true);
 };
+Switch.prototype.enable = function () {
+    setSwitchDisabled.call(this, this._options.disabled = false);
+};
+
+Switch.prototype.remove = function () {
+    try {
+        this._el.setAttribute('style',this._el.getAttribute('style').replace(/\s*display:\s*none;/g,''));
+    }catch (e){}
+    this._switch.parentNode.removeChild(this._switch);
+    this._options.onRemove.call(this);
+};
+
+function noop() {}
 
 function mergeOptions(a, b, s) {
     if(!b)return a;

@@ -4,6 +4,16 @@ let classList = require('classlist');
 
 let legalSize = ['default','large','small'];
 
+let switchEventsHandles = {
+    changeSwitchStateFromCheckbox(){
+        this._toggle(this._el.checked);
+    },
+    changeSwitchStateFromSwitch(){
+        if(this._options.disabled)return;
+        this._toggle();
+    }
+};
+
 const SWITCH_BORDER_COLOR = '#dfdfdf';
 const SWITCH_ON_CLASS = 'switch-on';
 const SWITCH_OFF_CLASS = 'switch-off';
@@ -14,20 +24,24 @@ function Switch (el, options) {
 
 Switch.options = {
     size: 'default',
+    checked: undefined,
     onText: 'Y',
     offText: 'N',
-    onSwitchColor: '#F15648',
+    onSwitchColor: '#64BD63',
     offSwitchColor: '#fff',
     onJackColor: '#fff',
     offJackColor: '#fff',
     showText: false,
     disabled: false,
+    onInit: noop,
     onChange: noop,
     onRemove: noop,
     onDestroy: noop
 };
 
-/**
+/************************* private methods *************************/
+
+/** switch init
  *
  * @param el
  * @param options
@@ -45,9 +59,11 @@ Switch.prototype._init = function (el, options) {
     this._initElement();
 
     this._initEvents();
+
+    this._options.onInit.call(this);
 };
 
-/**
+/**use switch instead of checkbox
  *
  * @private
  */
@@ -67,6 +83,8 @@ Switch.prototype._initElement = function () {
 };
 /**
  * make switch DOM
+ *
+ * @private
  */
 Switch.prototype._createSwitch = function (){
     this._switch = document.createElement('span');
@@ -75,45 +93,6 @@ Switch.prototype._createSwitch = function (){
     return this._switch;
 };
 
-function initSwitchStyle(swEl, options, sw) {
-    classList(swEl).
-        add(
-        'switch',
-        'switch-' + (legalSize.includes(options.size) ? options.size : 'default'),
-        options.checked ? SWITCH_ON_CLASS : SWITCH_OFF_CLASS
-    );
-    setJackText.call(sw);
-    setSwitchColor.call(sw);
-    setJackPosition.call(sw);
-    setSwitchDisabled.call(sw, sw._options.disabled);
-}
-
-function insertSwitch(source, target) {
-    target.parentNode.insertBefore(source, target.nextSibling);
-}
-
-function setSwitchColor() {
-    this._switch.style.boxShadow = this._el.checked ?
-        ('inset 0 0 0 20px  ' + this._options.onSwitchColor) :
-        ('inset 0 0 0 0  ' + this._options.offSwitchColor);
-    this._switch.style.border = '1px solid ' + (this._el.checked ? this._options.onSwitchColor : SWITCH_BORDER_COLOR)
-    this._jack.style.backgroundColor = (this._el.checked ? this._options.onJackColor : this._options.offJackColor);
-}
-
-function setSwitchDisabled(disabled) {
-    this._el.disabled = disabled;
-    classList(this._switch)[disabled? 'add' : 'remove']('switch-disabled');
-}
-
-function setJackPosition() {
-    let offset = this._switch.clientWidth - this._jack.clientWidth;
-    this._jack.style.left = this._el.checked ? offset+'px' : 0;
-}
-
-function setJackText() {
-    if(!this._options.showText)return;
-    this._jack.innerHTML = this._el.checked ? this._options.onText : this._options.offText;
-}
 
 Switch.prototype._initEvents = function () {
     this._events =  new Map([
@@ -123,29 +102,7 @@ Switch.prototype._initEvents = function () {
     bindEvents(this._events,this);
 };
 
-let switchEventsHandles = {
-    changeSwitchStateFromCheckbox(){
-        this._toggle(this._el.checked);
-    },
-    changeSwitchStateFromSwitch(){
-        if(this._options.disabled)return;
-        this._toggle();
-    }
-};
-
-
-function bindEvents(events, sw) {
-    for(let[el, value] of events){
-        value = value.split(' ');
-        (function (event, func) {
-            el.addEventListener(event,function (e) {
-                switchEventsHandles[func].call(sw, e);
-            })
-        })(value[0], value[1]);
-    }
-}
-
-/**
+/**toggle switch and the checkbox.
  *
  * @param checked
  * @private
@@ -163,34 +120,63 @@ Switch.prototype._toggle = function (checked) {
     setSwitchColor.call(this);
 };
 
-/**
+/************************* public methods *************************/
+
+/**set switch ON
+ *
  * @public
  */
 Switch.prototype.on = function () {
     this._toggle(true);
 };
 
-/**
+/**set switch OFF
+ *
  * @public
  */
 Switch.prototype.off = function () {
     this._toggle(false);
 };
 
-/**
+/**toggle switch
+ *
  * @public
  */
 Switch.prototype.toggle = function () {
     this._toggle();
 };
 
+/**disable switch
+ *
+ *@public
+ */
 Switch.prototype.disabled = function () {
     setSwitchDisabled.call(this, this._options.disabled = true);
 };
+
+/**enable switch
+ *
+ *@public
+ */
 Switch.prototype.enable = function () {
     setSwitchDisabled.call(this, this._options.disabled = false);
 };
 
+/**
+ * remove all events bind to switch
+ *
+ * @public
+ */
+Switch.prototype.destroy = function () {
+    unbindEvents(this._events);
+    this._options.onDestroy.call(this);
+};
+
+/**
+ * remove switch form DOM and show the checkbox
+ *
+ * @public
+ */
 Switch.prototype.remove = function () {
     try {
         this._el.setAttribute('style',this._el.getAttribute('style').replace(/\s*display:\s*none;/g,''));
@@ -199,14 +185,83 @@ Switch.prototype.remove = function () {
     this._options.onRemove.call(this);
 };
 
+
 function noop() {}
 
-function mergeOptions(a, b, s) {
+function initSwitchStyle(swEl, options, sw) {
+    classList(swEl).
+    add(
+        'switch',
+        'switch-' + (legalSize.includes(options.size) ? options.size : 'default'),
+        options.checked ? SWITCH_ON_CLASS : SWITCH_OFF_CLASS
+    );
+    setJackText.call(sw);
+    setSwitchColor.call(sw);
+    setJackPosition.call(sw);
+    setSwitchDisabled.call(sw, sw._options.disabled);
+}
+
+function insertSwitch(source, target) {
+    target.parentNode.insertBefore(source, target.nextSibling);
+}
+
+function setSwitchColor() {
+    if(this._el.checked){
+        this._switch.style.boxShadow = 'inset 0 0 0 ' +  this._switch.clientHeight/1.8  + 'px ' + this._options.onSwitchColor;
+        this._switch.style.border = '1px solid ' + this._options.onSwitchColor;
+        this._switch.style.transition = 'border 0.4s, box-shadow 0.4s, background-color 1.4s';
+        this._switch.style.backgroundColor = this._options.onSwitchColor;
+        this._jack.style.backgroundColor = this._options.onJackColor;
+    }else {
+        this._switch.style.boxShadow = 'inset 0 0 0 0  ' + this._options.offSwitchColor;
+        this._switch.style.border = '1px solid ' + SWITCH_BORDER_COLOR;
+        this._switch.style.transition = 'border 0.4s, box-shadow 0.4s';
+        this._switch.style.backgroundColor = this._options.offSwitchColor;
+        this._jack.style.backgroundColor = this._options.offJackColor;
+    }
+}
+
+function setSwitchDisabled(disabled) {
+    this._el.disabled = disabled;
+    classList(this._switch)[disabled? 'add' : 'remove']('switch-disabled');
+}
+
+function setJackPosition() {
+    let offset = this._switch.clientWidth - this._jack.clientWidth;
+    this._jack.style.left = this._el.checked ? offset+'px' : 0;
+}
+
+function setJackText() {
+    if(!this._options.showText)return;
+    this._jack.innerHTML = this._el.checked ? this._options.onText : this._options.offText;
+}
+
+function mergeOptions(a, b) {
     if(!b)return a;
     Object.keys(b).forEach(key => {
         a[key] = b[key];
     });
     return a;
+}
+
+function bindEvents(events, sw) {
+    for(let[el, value] of events){
+        value = value.split(' ');
+        (function (event, func) {
+            el.addEventListener(event,function (e) {
+                switchEventsHandles[func].call(sw, e);
+            })
+        })(value[0], value[1]);
+    }
+}
+
+function unbindEvents(events) {
+    for(let[el, value] of events){
+        value = value.split(' ');
+        (function (event) {
+            el.removeEventListener(event);
+        })(value[0]);
+    }
 }
 
 export default Switch

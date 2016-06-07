@@ -6,19 +6,13 @@
     <link rel="stylesheet" href="/switch.css">
 </head>
 <body>
-<input id="light" type="checkbox" checked/>
+<input id="light" type="checkbox"/>
 <script src="/switch.js"></script>
 <script>
 
     (function () {
         var mySwitch = new Switch(document.querySelector('#light'),{
-            size: 'small',
-            showText: true,
-            onText: '词',
-            offText: '词',
-            onChange: function (checked) {
-                console.log(checked);
-            }
+            size: 'large'
         });
     })();
 

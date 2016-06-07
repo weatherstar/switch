@@ -1,12 +1,13 @@
-@primary-color: #F15648;
+@primary-color: #64BD63;
 
 .switch{
   display: inline-block;
   vertical-align: middle;
   position: relative;
   cursor: pointer;
-  transition: border 0.4s, box-shadow 0.4s, background-color 1.2s;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  user-select: none;
+  box-sizing: content-box;
   small{
     font-size: 12px;
     position: relative;
@@ -16,9 +17,10 @@
     display: block;
     background: #fff;
     box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-    transition: all 0.4s;
+    transition: all 0.2s;
     overflow: hidden;
     color: #000;
+    user-select: none;
   }
 }
 .switch-default{

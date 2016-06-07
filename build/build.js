@@ -1,6 +1,7 @@
 var path = require('path');
 var alias = require('./alias');
 var webpack = require('webpack');
+var precss       = require('precss');
 var autoprefixer = require('autoprefixer');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -18,18 +19,20 @@ module.exports = {
     resolve: {
         alias: Object.assign({}, alias)
     },
-    postcss: [autoprefixer({browsers: ['last 2 versions', 'Android 2.3']})],
+    postcss: function () {
+        return [precss, autoprefixer];
+    },
     module: {
         loaders: [
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader!postcss-loader")
             },
             // Optionally extract less files
             // or any other compile-to-css language
             {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader!postcss-loader")
             },
             {
                 test: /\.js$/,

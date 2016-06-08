@@ -6,11 +6,11 @@ let legalSize = ['default','large','small'];
 
 let switchEventsHandles = {
     changeSwitchStateFromCheckbox(){
-        this._toggle(this._el.checked);
+        this._switch._toggle(this.checked);
     },
     changeSwitchStateFromSwitch(){
-        if(this._options.disabled)return;
-        this._toggle();
+        if(this._instance._options.disabled)return;
+        this._instance._toggle();
     }
 };
 
@@ -34,7 +34,7 @@ function Switch (el, options) {
  * @private
  */
 Switch.prototype._init = function (el, options) {
-    
+
     let defaultOptions = {
         size: 'default',
         checked: undefined,
@@ -93,6 +93,7 @@ Switch.prototype._createSwitch = function (){
     this._switch = document.createElement('span');
     this._jack = document.createElement('small');
     this._switch.appendChild(this._jack);
+    this._switch._instance = this;
     return this._switch;
 };
 
@@ -171,7 +172,7 @@ Switch.prototype.enable = function () {
  * @public
  */
 Switch.prototype.destroy = function () {
-    unbindEvents(this._events);
+    unbindEvents(this._events,this);
     this._options.onDestroy.call(this);
 };
 
@@ -253,21 +254,18 @@ function bindEvents(events, sw) {
     for(let[el, value] of events){
         value = value.split(' ');
 
-        switchEventsWrap[value[1]] = function (e) {
-            switchEventsHandles[value[1]].call(sw, e);
-        };
-
         (function (event, func) {
-            el.addEventListener(event, switchEventsWrap[func])
+            el.addEventListener(event, switchEventsHandles[func])
         })(value[0], value[1]);
     }
 }
 
-function unbindEvents(events) {
+function unbindEvents(events,sw) {
     for(let[el, value] of events){
         value = value.split(' ');
         (function (event, func) {
-            el.removeEventListener(event, switchEventsWrap[func]);
+            console.log();
+            el.removeEventListener(event, switchEventsHandles[func]);
         })(value[0], value[1]);
     }
 }

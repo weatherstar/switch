@@ -12,7 +12,7 @@ module.exports = {
   entry: './src/index',
   output: {
     path: DIST_DIR,
-    publicPath: '/',
+    publicPath: '/dist',
     filename: "switch.js",
     library: "Switch",
     libraryTarget: 'umd'

@@ -14,6 +14,8 @@ let switchEventsHandles = {
     }
 };
 
+let switchEventsWrap = {};
+
 const SWITCH_BORDER_COLOR = '#dfdfdf';
 const SWITCH_ON_CLASS = 'switch-on';
 const SWITCH_OFF_CLASS = 'switch-off';
@@ -21,23 +23,6 @@ const SWITCH_OFF_CLASS = 'switch-off';
 function Switch (el, options) {
     this._init(el, options)
 }
-
-Switch.options = {
-    size: 'default',
-    checked: undefined,
-    onText: 'Y',
-    offText: 'N',
-    onSwitchColor: '#64BD63',
-    offSwitchColor: '#fff',
-    onJackColor: '#fff',
-    offJackColor: '#fff',
-    showText: false,
-    disabled: false,
-    onInit: noop,
-    onChange: noop,
-    onRemove: noop,
-    onDestroy: noop
-};
 
 /************************* private methods *************************/
 
@@ -49,13 +34,31 @@ Switch.options = {
  * @private
  */
 Switch.prototype._init = function (el, options) {
+    
+    let defaultOptions = {
+        size: 'default',
+        checked: undefined,
+        onText: 'Y',
+        offText: 'N',
+        onSwitchColor: '#64BD63',
+        offSwitchColor: '#fff',
+        onJackColor: '#fff',
+        offJackColor: '#fff',
+        showText: false,
+        disabled: false,
+        onInit: noop,
+        onChange: noop,
+        onRemove: noop,
+        onDestroy: noop
+    };
+    
     if(!el || el.nodeType !== 1 || el.type !== 'checkbox') return;
     if(el._switch)return el._switch;
     if(!this instanceof Switch) return new Switch(el, options);
 
     this._el = el;
     this._el._switch = this;
-    this._options = mergeOptions(this.constructor.options, options);
+    this._options = mergeOptions(defaultOptions, options);
     this._initElement();
 
     this._initEvents();
@@ -150,7 +153,7 @@ Switch.prototype.toggle = function () {
  *
  *@public
  */
-Switch.prototype.disabled = function () {
+Switch.prototype.disable = function () {
     setSwitchDisabled.call(this, this._options.disabled = true);
 };
 
@@ -181,8 +184,10 @@ Switch.prototype.remove = function () {
     try {
         this._el.setAttribute('style',this._el.getAttribute('style').replace(/\s*display:\s*none;/g,''));
     }catch (e){}
-    this._switch.parentNode.removeChild(this._switch);
-    this._options.onRemove.call(this);
+    if(this._switch.parentNode){
+        this._switch.parentNode.removeChild(this._switch);
+        this._options.onRemove.call(this);
+    }
 };
 
 
@@ -247,10 +252,13 @@ function mergeOptions(a, b) {
 function bindEvents(events, sw) {
     for(let[el, value] of events){
         value = value.split(' ');
+
+        switchEventsWrap[value[1]] = function (e) {
+            switchEventsHandles[value[1]].call(sw, e);
+        };
+
         (function (event, func) {
-            el.addEventListener(event,function (e) {
-                switchEventsHandles[func].call(sw, e);
-            })
+            el.addEventListener(event, switchEventsWrap[func])
         })(value[0], value[1]);
     }
 }
@@ -258,9 +266,9 @@ function bindEvents(events, sw) {
 function unbindEvents(events) {
     for(let[el, value] of events){
         value = value.split(' ');
-        (function (event) {
-            el.removeEventListener(event);
-        })(value[0]);
+        (function (event, func) {
+            el.removeEventListener(event, switchEventsWrap[func]);
+        })(value[0], value[1]);
     }
 }
 

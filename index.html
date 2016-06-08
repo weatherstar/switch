@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="demo/default.css">
+    <link rel="stylesheet" href="dist/switch.css">
+    <style>
+        *{margin: 0;padding: 0;}
+        body{
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        button{
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            margin-left: 10px;
+            padding: 5px 10px;
+            background: #F15648;
+            border: none;
+            color: #fff;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        button:hover{
+            background: #f14744;
+        }
+        .github-link{
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            color: #22b6d5;
+        }
+        .demo-content{
+            position: relative;
+            margin: 0 auto;
+            max-width: 1024px;
+            padding: 20px;
+        }
+        .demo-content .demo-box{
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed #999;
+        }
+        .demo-content .demo-box .demo-box-title{
+            text-transform: capitalize;
+            font-size: 18px;
+            color: #22b6d5;
+        }
+    </style>
+</head>
+<body>
+<div class="demo-content">
+    <a class="github-link" href="https://github.com/zhiyul/Switch">View on GitHub</a>
+    <div class="demo-box">
+        <h4 class="demo-box-title">default</h4>
+        <div class="demo-box-content">
+            <pre>
+                <code>
+                    var mySwitch = new Switch(el);
+                </code>
+            </pre>
+            <input type="checkbox" class="demo-default-1" />
+        </div>
+    </div>
+    <div class="demo-box">
+        <h4 class="demo-box-title">size</h4>
+        <div class="demo-box-content">
+            <pre>
+                <code>
+                    var mySwitch1 = new Switch(el, {size: 'small'});
+                    var mySwitch2 = new Switch(el, {size: 'default'});
+                    var mySwitch3 = new Switch(el, {size: 'large'});
+                </code>
+            </pre>
+            <input type="checkbox" class="demo-size-1" />
+            <input type="checkbox" class="demo-size-2" />
+            <input type="checkbox" class="demo-size-3" />
+        </div>
+    </div>
+    <div class="demo-box">
+        <h4 class="demo-box-title">checked</h4>
+        <div class="demo-box-content">
+            <pre>
+                <code>
+                    var mySwitch1 = new Switch(el, {checked: false});
+                    var mySwitch2 = new Switch(el, {checked: true});
+                </code>
+            </pre>
+            <input type="checkbox" class="demo-checked-1" />
+            <input type="checkbox" class="demo-checked-2" />
+        </div>
+    </div>
+    <div class="demo-box">
+        <h4 class="demo-box-title">text</h4>
+        <pre>
+            <code>
+                var mySwitch = new Switch(el, {
+                    showText: true,
+                    onText: 'O',
+                    offText: 'X'
+                });
+            </code>
+        </pre>
+        <input type="checkbox" class="demo-text-1" />
+    </div>
+    <div class="demo-box">
+        <h4 class="demo-box-title">color</h4>
+        <div class="demo-box-content">
+            <pre>
+            <code>
+                var mySwitch = new Switch(el, {
+                    onSwitchColor    : '#34B363',
+                    offSwitchColor   : '#D6B3A3',
+                    onJackColor      : '#1453B3',
+                    offJackColor     : '#A4B363'
+                });
+            </code>
+        </pre>
+            <input type="checkbox" class="demo-color-1" />
+        </div>
+    </div>
+    <div class="demo-box">
+        <h4 class="demo-box-title">disabled</h4>
+        <div class="demo-box-content">
+            <pre>
+                <code>
+                    var mySwitch = new Switch(el, {disabled: true});
+                </code>
+            </pre>
+            <input type="checkbox" class="demo-disabled-1" />
+        </div>
+    </div>
+    <div class="demo-box">
+        <h4 class="demo-box-title">API</h4>
+        <div class="demo-box-content">
+            <pre>
+                <code>
+                    var mySwitch = new Switch(el);
+
+                    mySwitch.on();
+                    mySwitch.off();
+                    mySwitch.toggle();
+                    mySwitch.disable();
+                    mySwitch.enable();
+                </code>
+            </pre>
+            <input type="checkbox" class="demo-api-1" />
+            <button onclick="switchHandle('demo-api-1','on')">ON</button>
+            <button onclick="switchHandle('demo-api-1','off')">OFF</button>
+            <button onclick="switchHandle('demo-api-1','toggle')">toggle</button>
+            <button onclick="switchHandle('demo-api-1','disable')">disable</button>
+            <button onclick="switchHandle('demo-api-1','enable')">enable</button>
+        </div>
+    </div>
+    <div class="demo-box">
+        <h4 class="demo-box-title">destroy</h4>
+        <div class="demo-box-content">
+            <pre>
+                <code>
+                    var mySwitch = new Switch(el);
+
+                    mySwitch.destroy();
+                </code>
+            </pre>
+            <input type="checkbox" class="demo-destroy-1" />
+            <button onclick="switchHandle('demo-destroy-1','destroy')">destroy</button>
+        </div>
+    </div>
+    <div class="demo-box">
+        <h4 class="demo-box-title">remove</h4>
+        <div class="demo-box-content">
+            <pre>
+                <code>
+                    var mySwitch = new Switch(el);
+
+                    mySwitch.remove();
+                </code>
+            </pre>
+            <input type="checkbox" class="demo-remove-1">
+            <button onclick="switchHandle('demo-remove-1','remove')">remove</button>
+        </div>
+    </div>
+</div>
+<script src="demo/highlight.pack.js"></script>
+<script src="dist/switch.js"></script>
+<script>
+    var switches = {};
+    var switchConfig = {
+        'demo-default-1': {},
+        'demo-size-1': {
+            size: 'small'
+        },
+        'demo-size-2': {
+            size: 'default'
+        },
+        'demo-size-3': {
+            size: 'large'
+        },
+        'demo-checked-1': {
+            checked: false
+        },
+        'demo-checked-2': {
+            checked: true
+        },
+        'demo-text-1' :{
+            showText: true,
+            onText: 'O',
+            offText: 'X'
+        },
+        'demo-color-1': {
+            onSwitchColor    : '#34B363',
+            offSwitchColor   : '#D6B3A3',
+            onJackColor      : '#1453B3',
+            offJackColor     : '#A4B363'
+        },
+        'demo-disabled-1': {
+            checked: true,
+            disabled: true
+        },
+        'demo-api-1': {},
+        'demo-destroy-1': {},
+        'demo-remove-1': {}
+    };
+
+    Object.keys(switchConfig).forEach(function (key) {
+        switches[key] = new Switch(document.querySelector('.' + key),switchConfig[key]);
+    });
+
+    function switchHandle(key, event) {
+        switches[key][event]();
+    }
+    hljs.initHighlightingOnLoad();
+
+</script>
+</body>
+</html>

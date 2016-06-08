@@ -1,4 +1,5 @@
 require('./switch.less');
+let fastclick = require('fastclick');
 
 let classList = require('classlist');
 
@@ -82,7 +83,7 @@ Switch.prototype._initElement = function () {
     let newSwitch = this._createSwitch();
     insertSwitch(newSwitch, this._el);
     initSwitchStyle(newSwitch, this._options, this);
-    
+    fastclick.attach(newSwitch);
 };
 /**
  * make switch DOM

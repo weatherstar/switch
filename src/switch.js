@@ -15,8 +15,6 @@ let switchEventsHandles = {
     }
 };
 
-let switchEventsWrap = {};
-
 const SWITCH_BORDER_COLOR = '#dfdfdf';
 const SWITCH_ON_CLASS = 'switch-on';
 const SWITCH_OFF_CLASS = 'switch-off';

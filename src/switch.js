@@ -12,6 +12,13 @@ let switchEventsHandles = {
     changeSwitchStateFromSwitch(){
         if(this._instance._options.disabled)return;
         this._instance._toggle();
+    },
+    changeSwitchStateFromKeyboard(e){
+        var key = e.which || e.keyCode || 0;
+        if(this._instance._options.disabled)return;
+        if(key === 13){
+            this._instance._toggle();
+        }
     }
 };
 
@@ -79,6 +86,7 @@ Switch.prototype._initElement = function () {
     }
 
     let newSwitch = this._createSwitch();
+    initSwitchAttr(newSwitch, this._options);
     insertSwitch(newSwitch, this._el);
     initSwitchStyle(newSwitch, this._options, this);
     fastclick.attach(newSwitch);
@@ -100,7 +108,8 @@ Switch.prototype._createSwitch = function (){
 Switch.prototype._initEvents = function () {
     this._events =  new Map([
         [this._el, 'change changeSwitchStateFromCheckbox'],
-        [this._switch, 'click changeSwitchStateFromSwitch']
+        [this._switch, 'click changeSwitchStateFromSwitch'],
+        [this._switch, 'keypress changeSwitchStateFromKeyboard']
     ]);
     bindEvents(this._events,this);
 };
@@ -115,6 +124,7 @@ Switch.prototype._toggle = function (checked) {
     this._options.onChange.call(this, this._el.checked);
     let addClass = this._el.checked ? SWITCH_ON_CLASS : SWITCH_OFF_CLASS;
     let removeClass = this._el.checked ? SWITCH_OFF_CLASS : SWITCH_ON_CLASS;
+    this._switch.setAttribute('aria-checked', this._el.checked);
     classList(this._switch)
         .add(addClass)
         .remove(removeClass);
@@ -206,6 +216,13 @@ function initSwitchStyle(swEl, options, sw) {
     setSwitchDisabled.call(sw, sw._options.disabled);
 }
 
+function initSwitchAttr(swEl, options) {
+    swEl.setAttribute('tabindex', 0);
+    swEl.setAttribute('role', 'checkbox');
+    swEl.setAttribute('aria-checked', options.checked);
+    swEl.setAttribute('aria-disabled', options.disabled);
+}
+
 function insertSwitch(source, target) {
     target.parentNode.insertBefore(source, target.nextSibling);
 }
@@ -229,6 +246,7 @@ function setSwitchColor() {
 function setSwitchDisabled(disabled) {
     this._el.disabled = disabled;
     classList(this._switch)[disabled? 'add' : 'remove']('switch-disabled');
+    this._switch.setAttribute('aria-disabled', disabled);
 }
 
 function setJackPosition() {

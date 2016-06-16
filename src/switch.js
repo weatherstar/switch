@@ -107,9 +107,9 @@ Switch.prototype._createSwitch = function (){
 
 Switch.prototype._initEvents = function () {
     this._events =  new Map([
-        [this._el, 'change changeSwitchStateFromCheckbox'],
-        [this._switch, 'click changeSwitchStateFromSwitch'],
-        [this._switch, 'keypress changeSwitchStateFromKeyboard']
+        ['change changeSwitchStateFromCheckbox', this._el],
+        ['click changeSwitchStateFromSwitch', this._switch],
+        ['keypress changeSwitchStateFromKeyboard',this._switch]
     ]);
     bindEvents(this._events,this);
 };
@@ -268,7 +268,7 @@ function mergeOptions(a, b) {
 }
 
 function bindEvents(events, sw) {
-    for(let[el, value] of events){
+    for(let[value, el] of events){
         value = value.split(' ');
 
         (function (event, func) {

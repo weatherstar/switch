@@ -278,7 +278,7 @@ function bindEvents(events, sw) {
 }
 
 function unbindEvents(events,sw) {
-    for(let[el, value] of events){
+    for(let[value, el] of events){
         value = value.split(' ');
         (function (event, func) {
             console.log();

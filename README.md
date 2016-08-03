@@ -31,7 +31,7 @@ $ npm install weatherstar-switch --save-dev
 standalone version
 
 ````javascript
-var el = document.querySelector('.checkbox-swtich');
+var el = document.querySelector('.checkbox-switch');
 var mySwitch = new Switch(el, options);
 ````
 

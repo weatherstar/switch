@@ -5,7 +5,7 @@
 
 :rabbit: A simple and powerful iOS style switch for checkbox.
 
-[Live Preview](https://weatherstar.me/Switch/)
+[Live Preview](http://weatherstar.me/Switch/)
 
 ## Installation
 

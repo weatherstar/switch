@@ -82,9 +82,9 @@ defaults = {
 - `onInit` : called when switch init finish
 - `beforeChange` : called before original checkbox's `checked` change
 - `onChange` : called when original checkbox's `checked` change
-- `onRemove` : called before `remove switch element from DOM`
+- `beforeRemove` : called before `remove switch element from DOM`
 - `onRemove` : called when `remove switch element from DOM` done
-- `onDestroy` : called before  `remove all events on switch element`
+- `beforeDestroy` : called before  `remove all events on switch element`
 - `onDestroy` : called when  `remove all events on switch element` done
 
 ## API

@@ -53,8 +53,11 @@ Switch.prototype._init = function (el, options) {
         showText: false,
         disabled: false,
         onInit: noop,
+        beforeChange: noop,
         onChange: noop,
+        beforeRemove: noop,
         onRemove: noop,
+        beforeDestroy: noop,
         onDestroy: noop
     };
     
@@ -120,6 +123,7 @@ Switch.prototype._initEvents = function () {
  * @private
  */
 Switch.prototype._toggle = function (checked) {
+    this._options.beforeChange.call(this, this._el.checked);
     this._el.checked = checked === undefined ? !this._el.checked : checked;
     this._options.onChange.call(this, this._el.checked);
     let addClass = this._el.checked ? SWITCH_ON_CLASS : SWITCH_OFF_CLASS;
@@ -134,6 +138,14 @@ Switch.prototype._toggle = function (checked) {
 };
 
 /************************* public methods *************************/
+
+/**return checkbox status
+ *
+ * @public
+ */
+Switch.prototype.getChecked = function () {
+    return this._el.checked;
+};
 
 /**set switch ON
  *
@@ -181,6 +193,7 @@ Switch.prototype.enable = function () {
  * @public
  */
 Switch.prototype.destroy = function () {
+    this._options.beforeDestroy.call(this, this._el.checked);
     unbindEvents(this._events,this);
     this._options.onDestroy.call(this);
 };
@@ -191,6 +204,7 @@ Switch.prototype.destroy = function () {
  * @public
  */
 Switch.prototype.remove = function () {
+    this._options.beforeRemove.call(this, this._el.checked);
     try {
         this._el.setAttribute('style',this._el.getAttribute('style').replace(/\s*display:\s*none;/g,''));
     }catch (e){}

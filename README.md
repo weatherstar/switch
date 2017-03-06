@@ -60,8 +60,11 @@ defaults = {
   , showText         : false
   , disabled         : false
   , onInit           : function(){}
+  , beforeChange     : function(){}
   , onChange         : function(){}
+  , beforeRemove     : function(){}
   , onRemove         : function(){}
+  , beforeDestroy    : function(){}
   , onDestroy        : function(){}
 };
 ```
@@ -77,11 +80,18 @@ defaults = {
 - `showText` : show or hide text in the jack of switch 
 - `disabled` : enable or disable click events and changing the state of the switch
 - `onInit` : called when switch init finish
+- `beforeChange` : called before original checkbox's `checked` change
 - `onChange` : called when original checkbox's `checked` change
-- `onRemove` : called when `mySwitch.remove()`
-- `onDestroy` : called when  `mySwitch.destroy()`
+- `onRemove` : called before `remove switch element from DOM`
+- `onRemove` : called when `remove switch element from DOM` done
+- `onDestroy` : called before  `remove all events on switch element`
+- `onDestroy` : called when  `remove all events on switch element` done
 
 ## API
+
+##### .getChecked()
+
+Get switch element checked status.
 
 ##### .on()
 

@@ -41,7 +41,7 @@ work with module bundle
 require('weatherstar-switch/dist/switch.css');
 var Switch = require('weatherstar-switch');
 
-var el = document.querySelector('.checkbox-swtich');
+var el = document.querySelector('.checkbox-switch');
 var mySwitch = new Switch(el, options);
 ```
 

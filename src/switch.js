@@ -264,7 +264,7 @@ function setSwitchDisabled(disabled) {
 }
 
 function setJackPosition() {
-    let offset = this._switch.clientWidth - this._jack.clientWidth;
+    let offset = parseInt(window.getComputedStyle(this._switch).width) - parseInt(window.getComputedStyle(this._jack).width);
     this._jack.style.left = this._el.checked ? offset+'px' : 0;
 }
 

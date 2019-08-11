@@ -87,6 +87,17 @@ defaults = {
 - `beforeDestroy` : called before  `remove all events on switch element`
 - `onDestroy` : called when  `remove all events on switch element` done
 
+
+## Predefined Classes
+
+`switch-danger`
+`switch-primary`
+`switch-black`
+`switch-success`
+`switch-warning`
+`switch-info`
+`switch-transparent`
+
 ## API
 
 ##### .getChecked()

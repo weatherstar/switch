@@ -125,7 +125,7 @@
             <input type="checkbox" class="demo-color-1" />
         </div>
     </div>
-    
+
     <div class="demo-box">
         <h4 class="demo-box-title">Predefined Classes</h4>
         <div class="demo-box-content">
@@ -140,16 +140,17 @@
                 &lt;input type="checkbox" class="switch-transparent" /&gt;<br>
             </code>
         </pre>
-            <input type="checkbox" class="switch-primary" />
-             <input type="checkbox" class="switch-success" />
-             <input type="checkbox" class="switch-danger" />
-             <input type="checkbox" class="switch-black" />
-             <input type="checkbox" class="switch-warning" />
-             <input type="checkbox" class="switch-info" />
-             <input type="checkbox" class="switch-transparent" />
+            <input type="checkbox" class="demo-switch-primary" />
+             <input type="checkbox" class="demo-switch-success" />
+             <input type="checkbox" class="demo-switch-danger" />
+             <input type="checkbox" class="demo-switch-black" />
+             <input type="checkbox" class="demo-switch-warning" />
+             <input type="checkbox" class="demo-switch-info" />
+             <input type="checkbox" class="demo-switch-transparent" />
         </div>
     </div>
-    
+
+
     <div class="demo-box">
         <h4 class="demo-box-title">disabled</h4>
         <div class="demo-box-content">
@@ -244,43 +245,43 @@
             onJackColor      : '#1453B3',
             offJackColor     : '#A4B363'
         },
-        'switch-danger' : {
+        'demo-switch-danger' : {
             offSwitchColor : '#d06d6d',
             onSwitchColor : '#e61818',
             onJackColor      : '#f17d05',
             offJackColor     : '#ffffff'
          },
-        'switch-primary' : {
+        'demo-switch-primary' : {
             offSwitchColor : '#5e81a7',
             onSwitchColor : '#0575ef',
             onJackColor      : '#1453B3',
             offJackColor     : '#ffffff'
          },
-        'switch-black' : {
+        'demo-switch-black' : {
             offSwitchColor : '#bec3c7',
             onSwitchColor : '#101010',
             onJackColor      : '#1453B3',
             offJackColor     : '#ffffff'
          },
-        'switch-success' : {
+        'demo-switch-success' : {
             offSwitchColor : '#8fc59b',
             onSwitchColor : '#28bd4a',
             onJackColor      : '#03f56f',
             offJackColor     : '#ffffff'
          },
-        'switch-warning' : {
+        'demo-switch-warning' : {
             offSwitchColor : '#eacd74',
             onSwitchColor : '#fdbf00',
             onJackColor      : '#855439',
             offJackColor     : '#ffffff'
          },
-         'switch-info' : {
+         'demo-switch-info' : {
             offSwitchColor : '#7bc5d2',
             onSwitchColor : '#09d3f7',
             onJackColor      : '#1453B3',
             offJackColor     : '#ffffff'
          },
-         'switch-transparent' : {
+         'demo-switch-transparent' : {
             offSwitchColor : '#ffffff',
             onSwitchColor : '#ffffff',
             onJackColor      : '#1453B3',
@@ -296,6 +297,7 @@
     };
 
     Object.keys(switchConfig).forEach(function (key) {
+        console.log(document.querySelector('.' + key));
         switches[key] = new Switch(document.querySelector('.' + key),switchConfig[key]);
     });
 

@@ -90,13 +90,13 @@ defaults = {
 
 ## Predefined Classes
 
-`switch-danger`
-`switch-primary`
-`switch-black`
-`switch-success`
-`switch-warning`
-`switch-info`
-`switch-transparent`
+`demo-switch-danger`
+`demo-switch-primary`
+`demo-switch-black`
+`demo-switch-success`
+`demo-switch-warning`
+`demo-switch-info`
+`demo-switch-transparent`
 
 ## API
 

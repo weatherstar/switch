@@ -69,8 +69,8 @@ defaults = {
 };
 ```
 
-- `size` : size of switch element, can be `default` | `small` | `large`
-- `checked` : state of switch and checbox, if `undefined` the switch state according to the checkbox 
+- `size` : the size of a switch element, can be default | small | large
+- `checked` : state of switch and checkbox, if undefined the switch state according to the checkbox
 - `onText` :  text in the jack when switch ON
 - `offText` : text in the jack when switch OFF
 - `onSwitchColor` : color of checked switch element

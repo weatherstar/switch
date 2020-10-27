@@ -125,12 +125,13 @@
             <input type="checkbox" class="demo-color-1" />
         </div>
     </div>
-    
+
     <div class="demo-box">
         <h4 class="demo-box-title">Predefined Classes</h4>
         <div class="demo-box-content">
             <pre>
             <code>
+
                 &lt;input type="checkbox" class="switch-primary" /&gt;<br>
                 &lt;input type="checkbox" class="switch-success" /&gt;<br>
                 &lt;input type="checkbox" class="switch-danger" /&gt;<br>
@@ -296,6 +297,7 @@
     };
 
     Object.keys(switchConfig).forEach(function (key) {
+        console.log(document.querySelector('.' + key));
         switches[key] = new Switch(document.querySelector('.' + key),switchConfig[key]);
     });
 

